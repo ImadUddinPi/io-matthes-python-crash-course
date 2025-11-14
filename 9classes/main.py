@@ -1,30 +1,47 @@
-# class Dog:
-#     def __init__(self, name, age):
-#         """initialize with init values"""
-#         self.name = name
-#         self.age = age
+# # INHERITANCE
+# class Car:
+#     def __init__(self, make, model, year):
+#         """initialize attrs to describe a car"""
+#         self.make = make
+#         self.model = model
+#         self.year = year
+#         self.odometer_reading = 0
 
-#     def sit(self):
-#         """simulate a dog sitting"""
-#         return f"{self.name} is now sitting!"
+#     def get_descriptive_name(self):
+#         """return neatly formatted descriptive name"""
+#         long_name = f"{self.year} {self.make} {self.model}"
+#         print(long_name.title())
 
-#     def roll_over(self):
-#         """simulate a dog rolling over"""
-#         return f"{self.name} is rolling now!"
+#     def read_odometer(self):
+#         """print car's mileage"""
+#         print(f"The car has {self.odometer_reading} miles on it.")
+
+#     def update_odometer(self, mileage):
+#         """set odometer new val,
+#         reject changes if it attempts to roll
+#         the odometer back"""
+#         if mileage >= self.odometer_reading:
+#             self.odometer_reading = mileage
+#         else:
+#             print("You can't roll back an odometer")
+
+#     def increment_odometer(self, miles):
+#         """add given amount to odometer reading"""
+#         self.odometer_reading += miles
 
 
-# d1 = Dog("brian", 5)
-
-# # print(d1.__dict__)
-# print(Dog.__dict__.keys())
-
-# func = d1.sit
-# print(func)
-# print(Dog.sit(d1))
-
-# Working with Classes and Instances
+# class ElectricCar(Car):
+#     def __init__(self, make, model, year):
+#         """init attrs of parent"""
+#         super().__init__(make, model, year)
 
 
+# my_leaf = ElectricCar("nissan", "leaf", 1950)
+# my_leaf.get_descriptive_name()
+
+
+# ATTRS AND METHODS FOR CHILD CLASS
+# INHERITANCE
 class Car:
     def __init__(self, make, model, year):
         """initialize attrs to describe a car"""
@@ -35,7 +52,7 @@ class Car:
 
     def get_descriptive_name(self):
         """return neatly formatted descriptive name"""
-        long_name = f"{self.year} {self.make}, {self.model}"
+        long_name = f"{self.year} {self.make} {self.model}"
         print(long_name.title())
 
     def read_odometer(self):
@@ -55,26 +72,38 @@ class Car:
         """add given amount to odometer reading"""
         self.odometer_reading += miles
 
+    def fill_gas_tank(self):
+        print(f"Filling gas now!")
 
-c1 = Car("Aston Martin", "DB9", 1999)
-c1.get_descriptive_name()
-c1.read_odometer()
 
-# *Modifying Attribute Values
-# # changing values:
-# directly thorough an instance
-# through a method
-# increment through method
+class Battery:
+    def __init__(self, battery_size=40):
+        self.battery_size = battery_size
 
-# directly through instance
-# dot not to access attrs
-c1.odometer_reading = 23
-c1.read_odometer()
+    def describe_battery(self):
+        print(f"This car has a {self.battery_size}-KWh battery.")
 
-# via method
-c1.update_odometer(20)
-c1.read_odometer()
+    def get_range(self):
+        """evaluate mileage of car"""
+        if self.battery_size == 40:
+            range = 150
+        if self.battery_size == 65:
+            range = 225
+        print(f"The car has a range of {range} on a full charge.")
 
-# increment via method
-c1.increment_odometer(200)
-c1.read_odometer()
+
+class ElectricCar(Car):
+    def __init__(self, make, model, year):
+        """init attrs of parent"""
+        super().__init__(make, model, year)
+        self.battery = Battery()
+
+
+my_leaf = ElectricCar("nissan", "leaf", 2026)
+my_leaf.get_descriptive_name()
+my_leaf.battery.describe_battery()
+my_leaf.battery.battery_size = 65
+my_leaf.battery.get_range()
+
+
+# MODELING REAL-WORLD OBJECTS
